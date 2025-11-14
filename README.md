@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Event Registration System
 
 ## Description
@@ -115,3 +116,7 @@ node server.js
 This project is licensed under the **MIT License**.  
 You are free to use, copy, and modify this project for personal or educational purposes.  
 
+=======
+# codealpha_task1
+This is a web-based Event Registration System. Users can login and register for events. Admins can add, delete, and view events and registrations. This is my submission for CodeAlpha Task 1.
+>>>>>>> 8c9ac05424d5541f8209329e85532e8b6c891d12
