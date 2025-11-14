@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* ============================= */
+    /* General Reset                 */
+    /* ============================= */
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px 0;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(255,255,255,0.6);
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border: none;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 900px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover { transform: translateY(-3px); box-shadow:0 10px 35px rgba(0,0,0,0.35); }
+
+    h3 { text-align:center; margin-bottom:25px; font-weight:700; text-shadow:1px 1px 5px rgba(0,0,0,0.4); }
+
+    /* ============================= */
+    /* Event Cards                    */
+    /* ============================= */
+    .event-card {
+      background: rgba(255,255,255,0.15);
+      color:#fff;
+      border-radius:15px;
+      padding:15px 10px;
+      margin:10px 0;
+      text-align:center;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .event-card:hover { transform: translateY(-5px); box-shadow:0 8px 25px rgba(0,0,0,0.35); }
+    .event-card h5 { font-weight:600; margin-bottom:8px; color:#00eaff; }
+    .event-card p { margin:3px 0; font-size:0.95rem; }
+
+    /* Inputs & Buttons */
+    input, select, button {
+      border-radius:8px;
+      padding:10px;
+      font-size:0.95rem;
+      border:none;
+      outline:none;
+      margin-bottom:10px;
+    }
+
+    input, select { width:100%; background:rgba(255,255,255,0.2); color:#fff; }
+    input::placeholder, select option { color:rgba(255,255,255,0.7); }
+
+    button {
+      cursor:pointer;
+      background: linear-gradient(90deg,#00c6ff,#0072ff);
+      color:#fff;
+      font-weight:500;
+      transition: all 0.3s ease;
+    }
+    button:hover { transform: scale(1.05); box-shadow:0 5px 15px rgba(0,0,0,0.3); }
+
+    .error-text { color:#ffb3b3; font-size:0.95rem; text-align:center; margin-bottom:8px; }
+    .success-text { color:#b6f5c4; font-size:0.95rem; text-align:center; margin-bottom:8px; }
+
+    #registrationList li {
+      background: rgba(255,255,255,0.15);
+      padding:10px;
+      margin-bottom:8px;
+      border-radius:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:#fff;
+      font-size:0.95rem;
+    }
+
+    #registrationList li button {
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      font-size:0.8rem;
+      padding:4px 8px;
+    }
+
+    footer { margin-top:40px; text-align:center; font-size:14px; color:#ddd; }
+
+    @media(max-width:600px){ input, select { width:100%; } .event-card{ padding:12px; } }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎟️ Event Registration System</h1>
+
+  <!-- Available Events -->
+  <div class="card">
+    <h3>Available Events</h3>
+    <div id="eventList" class="row g-3"></div>
+    <div class="text-center mt-3">
+      <button id="refreshEvents" class="btn">Refresh Events</button>
+    </div>
+  </div>
+
+  <!-- Registration Form -->
+  <div class="card">
+    <h3>Register</h3>
+    <form id="regForm" class="row g-3 justify-content-center" novalidate>
+      <div class="col-md-4">
+        <input type="text" id="userName" placeholder="Your Name" required>
+      </div>
+      <div class="col-md-4">
+        <input type="email" id="email" placeholder="Your Email" required>
+      </div>
+      <div class="col-md-3">
+        <select id="eventId" required>
+          <option>Loading...</option>
+        </select>
+      </div>
+      <div class="col-12 text-center">
+        <p id="formError" class="error-text"></p>
+        <p id="formSuccess" class="success-text"></p>
+        <button type="submit" class="btn">Register</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- View Registrations -->
+  <div class="card">
+    <h3>Your Registrations</h3>
+    <div class="input-group mb-3 w-75 mx-auto">
+      <input type="email" id="searchEmail" placeholder="Enter your email">
+      <button id="viewRegs" class="btn">View Registrations</button>
+    </div>
+    <p id="viewError" class="error-text"></p>
+    <ul id="registrationList" class="list-group list-group-flush text-dark"></ul>
+  </div>
+
+  <footer>© 2025 Event Registration System | Designed by Anas Siddiqui</footer>
+</div>
+
+<script>
+const API = "http://localhost:5000/api";
+
+// Escape HTML
+function escapeHtml(str){ 
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+// Load events
+async function loadEvents() {
+  try {
+    const res = await fetch(API + '/events');
+    if(!res.ok) throw new Error('Failed to fetch events: ' + res.status);
+    const events = await res.json();
+    const list = document.getElementById('eventList');
+    const select = document.getElementById('eventId');
+
+    list.innerHTML = events.map(e => `
+      <div class="col-md-6 col-lg-3">
+        <div class="event-card">
+          <h5>${escapeHtml(e.name)}</h5>
+          <p><strong>Date:</strong> ${escapeHtml(e.date || '')}</p>
+          <p><strong>Location:</strong> ${escapeHtml(e.location || '')}</p>
+          <p><strong>Seats:</strong> ${e.seats ?? ''}</p>
+        </div>
+      </div>
+    `).join('');
+
+    select.innerHTML = events.map(e => `<option value="${e._id}">${escapeHtml(e.name)}</option>`).join('');
+  } catch(err) {
+    document.getElementById('eventList').innerHTML = '<div class="col-12 text-center">❌ Could not load events</div>';
+    document.getElementById('eventId').innerHTML = '<option disabled>Error loading</option>';
+    console.error(err);
+  }
+}
+
+// Live Validation for Name (no numbers)
+const userNameInput = document.getElementById('userName');
+const emailInput = document.getElementById('email');
+const formError = document.getElementById('formError');
+const formSuccess = document.getElementById('formSuccess');
+
+userNameInput.addEventListener('input', () => {
+  userNameInput.value = userNameInput.value.replace(/[^A-Za-z ]/g,'');
+  if(userNameInput.value.length < 3) formError.textContent = "❌ Name must be at least 3 letters.";
+  else formError.textContent = "";
+});
+
+emailInput.addEventListener('input', () => {
+  const emailRegex = /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  if(!emailRegex.test(emailInput.value)) formError.textContent = "❌ Enter a valid email.";
+  else formError.textContent = "";
+});
+
+// Submit registration
+document.getElementById('regForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const userName = userNameInput.value.trim();
+  const email = emailInput.value.trim();
+  const eventId = document.getElementById('eventId').value;
+
+  const nameRegex = /^[A-Za-z ]{3,30}$/;
+  const emailRegex = /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+  if(!nameRegex.test(userName)){ formError.textContent="❌ Please enter a valid name."; return; }
+  if(!emailRegex.test(email)){ formError.textContent="❌ Please enter a valid email."; return; }
+  if(!eventId){ formError.textContent="❌ Please select an event."; return; }
+
+  try{
+    const res = await fetch(API + '/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({userName,email,eventId})
+    });
+    const data = await res.json();
+    if(!res.ok){ formError.textContent = data.message || '❌ Registration failed.'; return; }
+    formSuccess.textContent = data.message || '✅ Registered successfully!';
+    formError.textContent = '';
+    e.target.reset();
+    document.getElementById('searchEmail').value = email;
+  } catch(err){
+    console.error(err);
+    formError.textContent='❌ Network error. Try again.';
+  }
+});
+
+// View Registrations
+document.getElementById('viewRegs').addEventListener('click', async ()=>{
+  const email = document.getElementById('searchEmail').value.trim();
+  const emailRegex = /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  const errorView = document.getElementById('viewError');
+  const list = document.getElementById('registrationList');
+  errorView.textContent='';
+  list.innerHTML='';
+
+  if(!emailRegex.test(email)){ errorView.textContent="❌ Enter a valid email."; return; }
+
+  try{
+    const res = await fetch(API + '/registrations/' + encodeURIComponent(email));
+    const regs = await res.json();
+    if(!regs.length){ list.innerHTML='<li class="list-group-item text-center">No registrations found</li>'; return; }
+
+    regs.forEach(r=>{
+      const li = document.createElement('li');
+      li.className="list-group-item d-flex justify-content-between align-items-center";
+      li.innerHTML = `${escapeHtml(r.userName)} — ${escapeHtml(r.eventId?.name || 'Unknown Event')}
+        <button class="btn btn-danger btn-sm" onclick="cancel('${r._id}')">Cancel</button>`;
+      list.appendChild(li);
+    });
+  } catch(err){
+    console.error(err);
+    errorView.textContent='❌ Error fetching registrations.';
+  }
+});
+
+// Cancel registration
+async function cancel(id){
+  if(!confirm("Cancel this registration?")) return;
+  try{
+    const res = await fetch(API+'/registrations/'+id,{method:'DELETE'});
+    const data = await res.json();
+    alert(data.message || 'Registration cancelled');
+    document.getElementById('viewRegs').click();
+  } catch(err){
+    console.error(err);
+    alert('❌ Cancel failed.');
+  }
+}
+window.cancel = cancel;
+document.getElementById('refreshEvents').addEventListener('click', loadEvents);
+window.addEventListener('load', loadEvents);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

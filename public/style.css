@@ -1,0 +1,306 @@
+/* ========================================================= */
+/* General Reset and Global Styles                           */
+/* ========================================================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 20px 0;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ========================================================= */
+/* Typography                                                 */
+/* ========================================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+h1 {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #f0f0f0;
+}
+
+/* ========================================================= */
+/* Container and Layout                                       */
+/* ========================================================= */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ========================================================= */
+/* Card Styles                                                */
+/* ========================================================= */
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 30px auto;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+  transition: all 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+}
+
+/* ========================================================= */
+/* Event Cards                                                */
+/* ========================================================= */
+.event-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  padding: 20px;
+  margin: 15px 0;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.2);
+}
+
+.event-card h5 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #00eaff;
+}
+
+.event-card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+}
+
+.event-card button {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.event-card button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+}
+
+/* ========================================================= */
+/* Form Inputs and Buttons                                     */
+/* ========================================================= */
+input, select, button, textarea {
+  font-family: 'Poppins', Arial, sans-serif;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+  outline: none;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input, select, textarea {
+  width: 100%;
+  background: rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+input::placeholder, select option, textarea::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+input:focus, select:focus, textarea:focus {
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 0 12px rgba(0,198,255,0.7);
+}
+
+select {
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+}
+
+select option {
+  background: #1e3c72;
+  color: #fff;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+/* ========================================================= */
+/* Error & Success Messages                                    */
+/* ========================================================= */
+.error-text {
+  color: #ff6b6b;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.success-text {
+  color: #7efc6f;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+/* ========================================================= */
+/* Registration List                                          */
+/* ========================================================= */
+#registrationList li {
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+#registrationList li button {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* ========================================================= */
+/* Footer                                                      */
+/* ========================================================= */
+footer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================================= */
+/* Animations                                                  */
+/* ========================================================= */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.card, .event-card {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* ========================================================= */
+/* Advanced Hover Effects and Gradients                       */
+/* ========================================================= */
+input:hover, select:hover, textarea:hover {
+  background: rgba(0,0,0,0.4);
+  box-shadow: 0 0 8px rgba(0,198,255,0.5);
+}
+
+.event-card:hover h5 {
+  color: #00ffea;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ========================================================= */
+/* Responsive Media Queries                                   */
+/* ========================================================= */
+@media (max-width: 1024px) {
+  .card { padding: 25px; margin: 25px auto; }
+  .event-card { padding: 18px; }
+  h1 { font-size: 2.4rem; }
+  h3 { font-size: 1.6rem; }
+}
+
+@media (max-width: 768px) {
+  .card { padding: 20px; margin: 20px auto; }
+  .event-card { padding: 15px; }
+  input, select, button { font-size: 0.95rem; }
+  h1 { font-size: 2rem; }
+  h3 { font-size: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.8rem; }
+  h3 { font-size: 1.2rem; }
+  input, select, button { font-size: 0.85rem; padding: 10px; }
+  .event-card { padding: 12px; font-size: 0.9rem; }
+}
