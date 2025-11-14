@@ -46,10 +46,10 @@ codealpha_task1_event-registration/
 
 1. **Clone the repository**  
 
-git clone https://github.com/Anas-Siddiqui78/codealpha_task1.git
+git clone https://github.com/Anas-Siddiqui78/codealpha_event_registration.git
 
 2. **Go to project folder**  
-cd codealpha_task1_event-registration
+cd codealpha_event-registration
 
 3. **Install dependencies**  
 npm install express mongoose body-parser cors
