@@ -46,7 +46,7 @@ codealpha_task1_event-registration/
 
 1. **Clone the repository**  
 
-git clone https://github.com/Anas-Siddiqui78/codealpha_task1_event-registration.git
+git clone https://github.com/Anas-Siddiqui78/codealpha_task1.git
 
 2. **Go to project folder**  
 cd codealpha_task1_event-registration
@@ -61,8 +61,6 @@ npm install express mongoose body-parser cors
 node server.js
 
 6. **Open in browser**  
--
-6. **Open in browser**  
 - Admin login: `http://localhost:5000/admin`  
 - User login: `http://localhost:5000/user-login`  
 
@@ -75,7 +73,7 @@ node server.js
   - **Username:** `admin`  
   - **Password:** `12345`  
 - View, add, or delete events.  
-- View all user registrations with exact date and time.
+- View all user registrations with exact date .
 
 ### User
 - Login with credentials:  
@@ -119,4 +117,4 @@ You are free to use, copy, and modify this project for personal or educational p
 =======
 # codealpha_task1
 This is a web-based Event Registration System. Users can login and register for events. Admins can add, delete, and view events and registrations. This is my submission for CodeAlpha Task 1.
->>>>>>> 8c9ac05424d5541f8209329e85532e8b6c891d12
+>>>>>>> 
